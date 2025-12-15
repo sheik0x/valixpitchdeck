@@ -7,16 +7,19 @@ const nextConfig = {
   },
   // Ensure proper routing
   trailingSlash: false,
-  webpack: (config) => {
+  // Output configuration for static export (if needed)
+  // output: 'export', // Uncomment for static export
+  webpack: (config, { isServer }) => {
     config.resolve.fallback = {
       ...config.resolve.fallback,
       fs: false,
       net: false,
       tls: false,
+      crypto: false,
     };
     return config;
   },
-  // Redirects for Vercel
+  // Redirects for both Vercel and Netlify
   async redirects() {
     return [
       {
@@ -30,6 +33,10 @@ const nextConfig = {
         permanent: true,
       },
     ];
+  },
+  // Ensure all routes are properly handled
+  async rewrites() {
+    return [];
   },
 }
 
