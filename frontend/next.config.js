@@ -5,6 +5,8 @@ const nextConfig = {
   images: {
     domains: [],
   },
+  // Ensure proper routing
+  trailingSlash: false,
   webpack: (config) => {
     config.resolve.fallback = {
       ...config.resolve.fallback,
@@ -13,6 +15,21 @@ const nextConfig = {
       tls: false,
     };
     return config;
+  },
+  // Redirects for Vercel
+  async redirects() {
+    return [
+      {
+        source: '/api',
+        destination: '/docs/api',
+        permanent: true,
+      },
+      {
+        source: '/security',
+        destination: '/docs/security',
+        permanent: true,
+      },
+    ];
   },
 }
 

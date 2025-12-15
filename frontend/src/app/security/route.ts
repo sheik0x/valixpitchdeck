@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server'
 
-export async function GET() {
-  return NextResponse.redirect(new URL('/docs/security', process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3001'), 301)
+export async function GET(request: Request) {
+  const url = new URL(request.url)
+  const baseUrl = url.origin
+  return NextResponse.redirect(new URL('/docs/security', baseUrl), 301)
 }
