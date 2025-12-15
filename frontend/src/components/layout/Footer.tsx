@@ -38,10 +38,11 @@ export function Footer() {
             <h3 className="text-lg font-semibold mb-4">Community</h3>
             <div className="flex space-x-4">
               <a
-                href="https://github.com"
+                href="https://github.com/sheik0x/unifiedsecuritylayer"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-primary-400 transition-colors"
+                aria-label="GitHub"
               >
                 <Github className="h-5 w-5" />
               </a>
@@ -50,6 +51,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-primary-400 transition-colors"
+                aria-label="Twitter"
               >
                 <Twitter className="h-5 w-5" />
               </a>

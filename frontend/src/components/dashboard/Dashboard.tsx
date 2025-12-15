@@ -3,6 +3,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts'
 import { TrendingUp, Activity, AlertTriangle } from 'lucide-react'
+import Link from 'next/link'
 
 // Mock data - replace with real API calls
 const leaseData = [
@@ -123,9 +124,9 @@ export function Dashboard() {
       <div className="card">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold">Recent Leases</h3>
-          <button className="text-sm text-primary-400 hover:text-primary-300">
+          <Link href="/fee-market" className="text-sm text-primary-400 hover:text-primary-300">
             View All
-          </button>
+          </Link>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">

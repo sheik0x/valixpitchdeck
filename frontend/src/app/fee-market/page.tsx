@@ -1,13 +1,24 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { FeeMarketView } from '@/components/fee-market/FeeMarketView'
 import { CreateBidForm } from '@/components/fee-market/CreateBidForm'
 import { CreateOfferForm } from '@/components/fee-market/CreateOfferForm'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs'
 
-export default function FeeMarketPage() {
+function FeeMarketContent() {
+  const searchParams = useSearchParams()
+  const action = searchParams.get('action')
   const [activeTab, setActiveTab] = useState('market')
+
+  useEffect(() => {
+    if (action === 'bid') {
+      setActiveTab('bid')
+    } else if (action === 'offer') {
+      setActiveTab('offer')
+    }
+  }, [action])
 
   return (
     <div className="space-y-6">
@@ -38,5 +49,13 @@ export default function FeeMarketPage() {
         </TabsContent>
       </Tabs>
     </div>
+  )
+}
+
+export default function FeeMarketPage() {
+  return (
+    <Suspense fallback={<div className="card p-8 text-center">Loading...</div>}>
+      <FeeMarketContent />
+    </Suspense>
   )
 }
