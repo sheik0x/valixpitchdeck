@@ -1,0 +1,30 @@
+node_modules/
+artifacts/
+cache/
+coverage/
+.env
+.env.local
+*.log
+
+# Hardhat
+.hardhat/
+
+# Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+validator-node/bin/
+validator-node/dist/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
