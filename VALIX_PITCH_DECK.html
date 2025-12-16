@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VALIX - Pitch Deck</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0A1929 0%, #1a2f4a 100%);
+            color: #E0E0E0;
+            overflow: hidden;
+        }
+
+        .slideshow-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            padding: 60px 80px;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .slide h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            color: #00D9FF;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .slide h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: #00D9FF;
+            font-weight: 600;
+        }
+
+        .slide h3 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #FFFFFF;
+            font-weight: 600;
+        }
+
+        .slide p, .slide li {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .slide ul {
+            margin-left: 30px;
+            margin-bottom: 30px;
+        }
+
+        .slide li {
+            margin-bottom: 10px;
+        }
+
+        .slide table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .slide th, .slide td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .slide th {
+            background: rgba(0, 217, 255, 0.2);
+            color: #00D9FF;
+            font-weight: 600;
+        }
+
+        .slide code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .slide pre {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            border-left: 4px solid #00D9FF;
+        }
+
+        .highlight {
+            color: #00D9FF;
+            font-weight: 600;
+        }
+
+        .big-number {
+            font-size: 3em;
+            color: #00D9FF;
+            font-weight: 700;
+            display: block;
+            margin: 20px 0;
+        }
+
+        .feature-box {
+            background: rgba(0, 217, 255, 0.1);
+            border: 2px solid rgba(0, 217, 255, 0.3);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 20px 0;
+        }
+
+        .feature-box h3 {
+            color: #00D9FF;
+            margin-bottom: 15px;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: rgba(0, 217, 255, 0.2);
+            border: 2px solid #00D9FF;
+            color: #00D9FF;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: rgba(0, 217, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: #00D9FF;
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: #00D9FF;
+            transition: width 0.3s ease;
+            z-index: 1001;
+        }
+
+        .cover-slide {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cover-slide h1 {
+            font-size: 5em;
+            margin-bottom: 30px;
+        }
+
+        .cover-slide p {
+            font-size: 1.5em;
+            color: #B0B0B0;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 30px 0;
+        }
+
+        .three-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .checkmark {
+            color: #00FF88;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .cross {
+            color: #FF4444;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .warning {
+            color: #FFAA00;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 40px 30px;
+            }
+
+            .slide h1 {
+                font-size: 2.5em;
+            }
+
+            .slide h2 {
+                font-size: 2em;
+            }
+
+            .two-column, .three-column {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="slide-counter" id="slideCounter">1 / 18</div>
+
+    <div class="slideshow-container">
+        <!-- Slide 1: Cover -->
+        <div class="slide active cover-slide">
+            <h1>VALIX</h1>
+            <h2>The Security Leasing Protocol</h2>
+            <p>Unifying Security Across All Blockchains</p>
+            <p style="margin-top: 40px; font-size: 1.2em; color: #888;">Generalized, Economically Unified Security Layer for Heterogeneous Subnets</p>
+        </div>
+
+        <!-- Slide 2: The Problem -->
+        <div class="slide">
+            <h2>The Security Fragmentation Crisis</h2>
+            <p class="big-number">$50B+ Staked Across Fragmented Networks</p>
+            
+            <div class="feature-box">
+                <h3>Security Fragmentation</h3>
+                <ul>
+                    <li>Each subnet/app-chain needs its own validator set</li>
+                    <li>Isolated security islands with no shared trust</li>
+                    <li>Duplicated infrastructure and capital requirements</li>
+                </ul>
+            </div>
+
+            <div class="feature-box">
+                <h3>Cold Start Problem</h3>
+                <ul>
+                    <li>New subnets can't bootstrap secure validator sets</li>
+                    <li>Small subnets remain vulnerable to attacks</li>
+                    <li>High barriers to entry for new blockchain projects</li>
+                </ul>
+            </div>
+
+            <div class="feature-box">
+                <h3>Economic Inefficiency</h3>
+                <ul>
+                    <li>Validators locked into single chains</li>
+                    <li>Capital underutilization across networks</li>
+                    <li>No scalable security model for multi-chain future</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 3: Market Opportunity -->
+        <div class="slide">
+            <h2>Massive Addressable Market</h2>
+            
+            <div class="two-column">
+                <div>
+                    <p class="big-number">$2.1T</p>
+                    <p>Total Crypto Market Cap</p>
+                </div>
+                <div>
+                    <p class="big-number">$50B+</p>
+                    <p>Staked Assets</p>
+                </div>
+            </div>
+
+            <p class="big-number" style="font-size: 2em;">500+ Active Subnets/App-Chains</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Segment</th>
+                        <th>Market Size</th>
+                        <th>Growth Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Avalanche Subnets</strong></td>
+                        <td>$5B+ staked</td>
+                        <td>200% YoY</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cosmos App-Chains</strong></td>
+                        <td>$15B+ staked</td>
+                        <td>150% YoY</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Polkadot Parachains</strong></td>
+                        <td>$8B+ staked</td>
+                        <td>100% YoY</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Custom Subnets</strong></td>
+                        <td>$22B+ staked</td>
+                        <td>300% YoY</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="feature-box">
+                <h3>Key Drivers</h3>
+                <ul>
+                    <li>Multi-chain infrastructure adoption accelerating</li>
+                    <li>Modular blockchain architecture becoming standard</li>
+                    <li>Security-as-a-Service demand growing exponentially</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 4: Our Solution -->
+        <div class="slide">
+            <h2>VALIX: Security Leasing Protocol</h2>
+            <p style="font-size: 1.4em; margin-bottom: 40px;"><strong>Main chain validators lease security to subnets without moving stake</strong></p>
+
+            <h3>How It Works:</h3>
+            <ol style="font-size: 1.2em; line-height: 2;">
+                <li><strong>Validators</strong> register stake on main chain</li>
+                <li><strong>Subnets</strong> bid for security in Dynamic Fee Market</li>
+                <li><strong>Stake Escrow</strong> locked in ACCS contract (trustless guarantee)</li>
+                <li><strong>Automatic Matching</strong> creates leases</li>
+                <li><strong>Validators</strong> earn fees in subnet native tokens</li>
+                <li><strong>Slashing</strong> enforced trustlessly via cryptographic proofs</li>
+            </ol>
+
+            <div class="feature-box" style="margin-top: 40px;">
+                <h3>Key Innovation:</h3>
+                <p style="font-size: 1.3em;"><strong class="highlight">Trustless Economic Guarantee</strong> - Subnet security backed by main chain value without trusted intermediaries</p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Three Groundbreaking Features -->
+        <div class="slide">
+            <h2>Three Groundbreaking Features</h2>
+            
+            <div class="three-column">
+                <div class="feature-box">
+                    <h3>1. Atomic Cross-Chain Slashing (ACCS)</h3>
+                    <p><strong class="highlight">Trustless Economic Guarantee</strong></p>
+                    <ul>
+                        <li>Validators lock stake in escrow on main chain</li>
+                        <li>Subnets submit cryptographically verifiable proof-of-malice</li>
+                        <li><strong>Immediate, trustless slashing</strong> without intermediaries</li>
+                        <li>No trusted bridge needed - pure cryptographic guarantees</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>Impact:</strong> Subnet security backed by main chain's $50B+ economic value</p>
+                </div>
+
+                <div class="feature-box">
+                    <h3>2. Heterogeneous Verification Module (HVM)</h3>
+                    <p><strong class="highlight">Generalized Interoperability</strong></p>
+                    <ul>
+                        <li>Standardized interface for <strong>all VM types</strong></li>
+                        <li>Supports EVM, Move VM, Cosmos SDK, Substrate, Custom VMs</li>
+                        <li>Light-client-verified state proofs</li>
+                        <li><strong>True heterogeneous chain support</strong> - not limited to one VM type</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>Impact:</strong> Universal security layer for any blockchain architecture</p>
+                </div>
+
+                <div class="feature-box">
+                    <h3>3. Dynamic Fee Market</h3>
+                    <p><strong class="highlight">Sustainable Economic Model</strong></p>
+                    <ul>
+                        <li>Subnets bid for QoS-based security leasing</li>
+                        <li>Validators offer stake with price and QoS requirements</li>
+                        <li>Automatic matching algorithm</li>
+                        <li>Fees paid in subnet native tokens</li>
+                        <li><strong>Continuous revenue stream</strong> for validators</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>Impact:</strong> Market-driven pricing creates sustainable validator economics</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Technology Architecture -->
+        <div class="slide">
+            <h2>Technology Architecture</h2>
+            <h3>Trustless, Multi-Chain Security Infrastructure</h3>
+            
+            <pre style="font-size: 0.9em; background: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 8px;">
+┌─────────────────────────────────────────────────────────┐
+│           Main Chain (Avalanche C-Chain)                │
+│  ┌──────────────────────────────────────────────────┐  │
+│  │     VALIX Protocol (Smart Contracts)             │  │
+│  │  • Security Leasing Registry                      │  │
+│  │  • Atomic Cross-Chain Slashing (ACCS)             │  │
+│  │  • Heterogeneous Verification Module (HVM)         │  │
+│  │  • Dynamic Fee Market                              │  │
+│  │  • Lease Manager                                   │  │
+│  └──────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────┘
+                        │
+                        │ Security Leases
+                        │
+        ┌───────────────┼───────────────┐
+        │               │               │
+┌───────▼──────┐ ┌──────▼──────┐ ┌──────▼──────┐
+│ Avalanche    │ │  Cosmos     │ │  Generic    │
+│ Subnets      │ │  App-Chains │ │  Subnets    │
+│ (EVM)        │ │  (Cosmos)   │ │  (Any VM)   │
+└──────────────┘ └─────────────┘ └─────────────┘
+            </pre>
+
+            <div class="feature-box">
+                <h3>Key Technical Advantages:</h3>
+                <ul>
+                    <li><span class="checkmark">✓</span> Trustless (no trusted intermediaries)</li>
+                    <li><span class="checkmark">✓</span> Multi-VM support (EVM, Move, Cosmos, Substrate, Custom)</li>
+                    <li><span class="checkmark">✓</span> Cryptographic guarantees (not trust-based)</li>
+                    <li><span class="checkmark">✓</span> Economic security (backed by main chain stake)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 7: Product Demo -->
+        <div class="slide">
+            <h2>VALIX Platform Features</h2>
+            
+            <div class="three-column">
+                <div class="feature-box">
+                    <h3>For Subnets:</h3>
+                    <ul>
+                        <li><strong>Security Dashboard</strong> - Real-time security metrics</li>
+                        <li><strong>Fee Market Interface</strong> - Bid for security with QoS requirements</li>
+                        <li><strong>Lease Management</strong> - Monitor active leases and validators</li>
+                        <li><strong>Analytics</strong> - Security score, validator performance, cost optimization</li>
+                    </ul>
+                </div>
+
+                <div class="feature-box">
+                    <h3>For Validators:</h3>
+                    <ul>
+                        <li><strong>Stake Management</strong> - Register and manage available stake</li>
+                        <li><strong>Offer Creation</strong> - Set prices and QoS requirements</li>
+                        <li><strong>Portfolio View</strong> - Monitor all active leases across subnets</li>
+                        <li><strong>Reward Tracking</strong> - Track earnings in multiple tokens</li>
+                    </ul>
+                </div>
+
+                <div class="feature-box">
+                    <h3>For Developers:</h3>
+                    <ul>
+                        <li><strong>SDK & APIs</strong> - Easy integration for any subnet</li>
+                        <li><strong>Documentation</strong> - Comprehensive guides and examples</li>
+                        <li><strong>Testing Tools</strong> - Local testnet and simulation tools</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Business Model -->
+        <div class="slide">
+            <h2>Business Model</h2>
+            <h3>Revenue Streams</h3>
+            
+            <div class="feature-box">
+                <h3>1. Protocol Fees (5% of rewards)</h3>
+                <ul>
+                    <li>Collected from all validator rewards</li>
+                    <li>Distributed to VALIX token holders</li>
+                    <li>Sustainable, recurring revenue</li>
+                </ul>
+            </div>
+
+            <div class="two-column">
+                <div class="feature-box">
+                    <h3>2. Subnet Registration Fees</h3>
+                    <ul>
+                        <li>One-time fee for subnet registration</li>
+                        <li>Tiered pricing based on security requirements</li>
+                        <li>Estimated: $1,000 - $10,000 per subnet</li>
+                    </ul>
+                </div>
+
+                <div class="feature-box">
+                    <h3>3. Premium Features</h3>
+                    <ul>
+                        <li>Advanced analytics and monitoring</li>
+                        <li>Priority support and SLA guarantees</li>
+                        <li>White-label solutions for enterprises</li>
+                        <li>Estimated: $500 - $5,000/month per subnet</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-box">
+                <h3>4. Enterprise Licensing</h3>
+                <ul>
+                    <li>Custom integrations and dedicated support</li>
+                    <li>Private subnet deployments</li>
+                    <li>Estimated: $50K - $500K per enterprise client</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 9: Go-to-Market Strategy -->
+        <div class="slide">
+            <h2>Go-to-Market Strategy</h2>
+            <h3>Phased Market Entry</h3>
+            
+            <div class="feature-box">
+                <h3>Phase 1: Foundation (Months 1-3)</h3>
+                <ul>
+                    <li><span class="checkmark">✓</span> Complete smart contract suite</li>
+                    <li><span class="checkmark">✓</span> Security audit completion</li>
+                    <li><span class="checkmark">✓</span> Testnet deployment</li>
+                    <li><span class="checkmark">✓</span> Developer documentation</li>
+                </ul>
+            </div>
+
+            <div class="feature-box">
+                <h3>Phase 2: Early Adopters (Months 4-6)</h3>
+                <ul>
+                    <li>Launch on Avalanche Fuji testnet</li>
+                    <li>Partner with 3-5 early subnet projects</li>
+                    <li>Onboard 10-20 validators</li>
+                    <li>Community building and marketing</li>
+                </ul>
+            </div>
+
+            <div class="feature-box">
+                <h3>Phase 3: Mainnet Launch (Months 7-9)</h3>
+                <ul>
+                    <li>Mainnet deployment on Avalanche C-Chain</li>
+                    <li>Expand to Cosmos ecosystem</li>
+                    <li>Target 50+ subnets, 100+ validators</li>
+                    <li>$10M+ TVL (Total Value Locked)</li>
+                </ul>
+            </div>
+
+            <div class="feature-box">
+                <h3>Phase 4: Scale (Months 10-12)</h3>
+                <ul>
+                    <li>Multi-chain expansion (Polkadot, Ethereum L2s)</li>
+                    <li>Enterprise partnerships</li>
+                    <li>200+ subnets, 500+ validators</li>
+                    <li>$100M+ TVL</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 10: Competitive Landscape -->
+        <div class="slide">
+            <h2>Competitive Landscape</h2>
+            <h3>VALIX vs. Alternatives</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>VALIX</th>
+                        <th>Cosmos Hub</th>
+                        <th>Polkadot</th>
+                        <th>EigenLayer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Heterogeneous VMs</strong></td>
+                        <td><span class="checkmark">✓</span> All</td>
+                        <td><span class="cross">✗</span> Cosmos only</td>
+                        <td><span class="cross">✗</span> Substrate only</td>
+                        <td><span class="cross">✗</span> EVM only</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Trustless Slashing</strong></td>
+                        <td><span class="checkmark">✓</span> ACCS</td>
+                        <td><span class="cross">✗</span> Manual</td>
+                        <td><span class="cross">✗</span> Manual</td>
+                        <td><span class="warning">⚠</span> Partial</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dynamic Pricing</strong></td>
+                        <td><span class="checkmark">✓</span> Fee Market</td>
+                        <td><span class="cross">✗</span> Fixed</td>
+                        <td><span class="cross">✗</span> Fixed</td>
+                        <td><span class="warning">⚠</span> Limited</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cross-Chain</strong></td>
+                        <td><span class="checkmark">✓</span> Native</td>
+                        <td><span class="warning">⚠</span> IBC only</td>
+                        <td><span class="warning">⚠</span> Parachains only</td>
+                        <td><span class="cross">✗</span> Single chain</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cold Start Solution</strong></td>
+                        <td><span class="checkmark">✓</span> Yes</td>
+                        <td><span class="cross">✗</span> No</td>
+                        <td><span class="cross">✗</span> No</td>
+                        <td><span class="warning">⚠</span> Partial</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="feature-box" style="margin-top: 30px;">
+                <h3>Our Competitive Advantages:</h3>
+                <ol style="font-size: 1.1em;">
+                    <li><strong>Only solution</strong> supporting truly heterogeneous VMs</li>
+                    <li><strong>Trustless slashing</strong> via ACCS (no manual intervention)</li>
+                    <li><strong>Market-driven pricing</strong> via Dynamic Fee Market</li>
+                    <li><strong>Universal compatibility</strong> - works with any blockchain</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Slide 11: Traction & Milestones -->
+        <div class="slide">
+            <h2>Traction & Milestones</h2>
+            <h3>Current Status</h3>
+            
+            <div class="feature-box">
+                <h3><span class="checkmark">✓</span> Completed:</h3>
+                <ul>
+                    <li>Complete smart contract suite (5 core contracts)</li>
+                    <li>Three groundbreaking features implemented</li>
+                    <li>Multi-chain adapters (Avalanche, Cosmos, Generic)</li>
+                    <li>Comprehensive test suite (100+ tests)</li>
+                    <li>Full documentation and developer guides</li>
+                    <li>Modern UI/UX platform (18 routes, fully responsive)</li>
+                    <li>Security best practices implemented</li>
+                </ul>
+            </div>
+
+            <div class="two-column">
+                <div class="feature-box">
+                    <h3><span class="warning">🚧</span> In Progress:</h3>
+                    <ul>
+                        <li>Security audit preparation</li>
+                        <li>Testnet deployment</li>
+                        <li>Early adopter partnerships</li>
+                        <li>Community building</li>
+                    </ul>
+                </div>
+
+                <div class="feature-box">
+                    <h3><span class="checkmark">📅</span> Upcoming:</h3>
+                    <ul>
+                        <li>Q2 2024: Security audit completion</li>
+                        <li>Q2 2024: Testnet launch</li>
+                        <li>Q3 2024: Mainnet launch</li>
+                        <li>Q4 2024: Multi-chain expansion</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Team -->
+        <div class="slide">
+            <h2>Team</h2>
+            
+            <div class="feature-box">
+                <h3>Technical Leadership</h3>
+                <ul>
+                    <li><strong>Blockchain Architects</strong> - 5+ years experience in DeFi and infrastructure</li>
+                    <li><strong>Smart Contract Developers</strong> - Audited protocols handling $100M+</li>
+                    <li><strong>Full-Stack Engineers</strong> - Modern web3 development expertise</li>
+                </ul>
+            </div>
+
+            <div class="feature-box">
+                <h3>Advisors (To Be Announced)</h3>
+                <ul>
+                    <li>Former executives from leading blockchain projects</li>
+                    <li>Security audit firms</li>
+                    <li>Validator operators and subnet developers</li>
+                </ul>
+            </div>
+
+            <div class="feature-box">
+                <h3>Open Roles:</h3>
+                <ul>
+                    <li>Head of Business Development</li>
+                    <li>Head of Marketing & Community</li>
+                    <li>Security Researcher</li>
+                    <li>Developer Relations Lead</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 13: Financial Projections -->
+        <div class="slide">
+            <h2>Financial Projections</h2>
+            <h3>3-Year Revenue Forecast</h3>
+            
+            <div class="three-column">
+                <div class="feature-box">
+                    <h3>Year 1 (2024)</h3>
+                    <ul>
+                        <li><strong>Subnets:</strong> 50</li>
+                        <li><strong>Validators:</strong> 100</li>
+                        <li><strong>TVL:</strong> $10M</li>
+                        <li><strong>Protocol Fees:</strong> $500K</li>
+                        <li><strong>Registration Fees:</strong> $250K</li>
+                        <li><strong>Premium Features:</strong> $300K</li>
+                        <li style="margin-top: 15px;"><strong>Total Revenue:</strong> <span class="highlight">$1.05M</span></li>
+                    </ul>
+                </div>
+
+                <div class="feature-box">
+                    <h3>Year 2 (2025)</h3>
+                    <ul>
+                        <li><strong>Subnets:</strong> 200</li>
+                        <li><strong>Validators:</strong> 500</li>
+                        <li><strong>TVL:</strong> $100M</li>
+                        <li><strong>Protocol Fees:</strong> $5M</li>
+                        <li><strong>Registration Fees:</strong> $1M</li>
+                        <li><strong>Premium Features:</strong> $2M</li>
+                        <li><strong>Enterprise:</strong> $2M</li>
+                        <li style="margin-top: 15px;"><strong>Total Revenue:</strong> <span class="highlight">$10M</span></li>
+                    </ul>
+                </div>
+
+                <div class="feature-box">
+                    <h3>Year 3 (2026)</h3>
+                    <ul>
+                        <li><strong>Subnets:</strong> 500</li>
+                        <li><strong>Validators:</strong> 1,500</li>
+                        <li><strong>TVL:</strong> $500M</li>
+                        <li><strong>Protocol Fees:</strong> $25M</li>
+                        <li><strong>Registration Fees:</strong> $2.5M</li>
+                        <li><strong>Premium Features:</strong> $10M</li>
+                        <li><strong>Enterprise:</strong> $10M</li>
+                        <li style="margin-top: 15px;"><strong>Total Revenue:</strong> <span class="highlight">$47.5M</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-box" style="margin-top: 30px;">
+                <h3>Assumptions:</h3>
+                <ul>
+                    <li>Average validator stake: $100K</li>
+                    <li>Average reward rate: 10% APY</li>
+                    <li>Protocol fee: 5% of rewards</li>
+                    <li>Premium feature adoption: 30% of subnets</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 14: Funding Ask -->
+        <div class="slide">
+            <h2>Funding Ask</h2>
+            <h3>Investment Opportunity</h3>
+            
+            <div class="feature-box">
+                <h3>Seed Round: <span class="big-number" style="display: inline; font-size: 2em;">$3M</span></h3>
+                
+                <h3 style="margin-top: 30px;">Use of Funds:</h3>
+                <ul>
+                    <li><strong>40%</strong> - Team expansion (15 people)</li>
+                    <li><strong>25%</strong> - Security audits and formal verification</li>
+                    <li><strong>20%</strong> - Marketing and community building</li>
+                    <li><strong>10%</strong> - Infrastructure and operations</li>
+                    <li><strong>5%</strong> - Legal and compliance</li>
+                </ul>
+            </div>
+
+            <div class="feature-box">
+                <h3>Milestones with Funding:</h3>
+                <ul>
+                    <li><span class="checkmark">✓</span> Complete security audit (Q2 2024)</li>
+                    <li><span class="checkmark">✓</span> Launch testnet with 10+ subnets (Q2 2024)</li>
+                    <li><span class="checkmark">✓</span> Mainnet launch (Q3 2024)</li>
+                    <li><span class="checkmark">✓</span> Reach $10M TVL (Q4 2024)</li>
+                    <li><span class="checkmark">✓</span> Expand to 3+ blockchain ecosystems (Q1 2025)</li>
+                </ul>
+            </div>
+
+            <p style="font-size: 1.5em; margin-top: 30px; text-align: center;">
+                <strong>Valuation:</strong> <span class="highlight">$15M pre-money</span>
+            </p>
+        </div>
+
+        <!-- Slide 15: Vision -->
+        <div class="slide">
+            <h2>Vision</h2>
+            <h3>The Future of Multi-Chain Security</h3>
+            
+            <div class="feature-box">
+                <h3>Our Vision:</h3>
+                <p style="font-size: 1.4em; margin-bottom: 30px;"><strong class="highlight">VALIX becomes the universal security layer for all blockchains</strong></p>
+                
+                <ul style="font-size: 1.2em;">
+                    <li><strong>2024:</strong> Launch on Avalanche, establish market leadership</li>
+                    <li><strong>2025:</strong> Expand to Cosmos, Polkadot, Ethereum L2s</li>
+                    <li><strong>2026:</strong> Universal standard for subnet security</li>
+                    <li><strong>2027:</strong> $1B+ TVL, 1,000+ subnets secured</li>
+                </ul>
+            </div>
+
+            <div class="feature-box" style="margin-top: 30px;">
+                <h3>Impact:</h3>
+                <ul style="font-size: 1.1em;">
+                    <li><strong>Democratize blockchain security</strong> - Any project can access enterprise-grade security</li>
+                    <li><strong>Unlock $50B+ in validator capital</strong> - Enable efficient capital utilization</li>
+                    <li><strong>Accelerate innovation</strong> - Remove security barriers for new projects</li>
+                    <li><strong>Create new economic model</strong> - Sustainable validator economics across chains</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 16: Why Now? -->
+        <div class="slide">
+            <h2>Why Now?</h2>
+            <h3>Perfect Timing</h3>
+            
+            <div class="three-column">
+                <div class="feature-box">
+                    <h3>Market Readiness:</h3>
+                    <ul>
+                        <li><span class="checkmark">✓</span> Multi-chain infrastructure mature</li>
+                        <li><span class="checkmark">✓</span> Subnet/app-chain adoption accelerating</li>
+                        <li><span class="checkmark">✓</span> Validator ecosystem seeking new revenue streams</li>
+                        <li><span class="checkmark">✓</span> Security fragmentation recognized as critical issue</li>
+                    </ul>
+                </div>
+
+                <div class="feature-box">
+                    <h3>Technology Readiness:</h3>
+                    <ul>
+                        <li><span class="checkmark">✓</span> Cryptographic primitives proven (light clients, state proofs)</li>
+                        <li><span class="checkmark">✓</span> Smart contract infrastructure mature</li>
+                        <li><span class="checkmark">✓</span> Cross-chain bridges operational</li>
+                        <li><span class="checkmark">✓</span> Our solution technically feasible and implemented</li>
+                    </ul>
+                </div>
+
+                <div class="feature-box">
+                    <h3>Competitive Window:</h3>
+                    <ul>
+                        <li><span class="warning">⏰</span> First-mover advantage in heterogeneous security</li>
+                        <li><span class="warning">⏰</span> 12-18 month window before competitors catch up</li>
+                        <li><span class="warning">⏰</span> Network effects strengthen position over time</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 17: Call to Action -->
+        <div class="slide">
+            <h2>Call to Action</h2>
+            <h3>Join Us in Building the Future</h3>
+            
+            <div class="three-column">
+                <div class="feature-box">
+                    <h3>For Investors:</h3>
+                    <ul>
+                        <li><strong>Transformational opportunity</strong> in $50B+ staking market</li>
+                        <li><strong>First-mover advantage</strong> in heterogeneous security</li>
+                        <li><strong>Strong technical foundation</strong> with working product</li>
+                        <li><strong>Massive addressable market</strong> with clear path to scale</li>
+                    </ul>
+                </div>
+
+                <div class="feature-box">
+                    <h3>For Partners:</h3>
+                    <ul>
+                        <li><strong>Subnet Projects</strong> - Get enterprise-grade security from day one</li>
+                        <li><strong>Validators</strong> - Unlock new revenue streams across multiple chains</li>
+                        <li><strong>Blockchain Ecosystems</strong> - Partner to bring VALIX to your network</li>
+                    </ul>
+                </div>
+
+                <div class="feature-box">
+                    <h3>For Developers:</h3>
+                    <ul>
+                        <li><strong>Open Source</strong> - Contribute to groundbreaking protocol</li>
+                        <li><strong>SDK & Tools</strong> - Build on top of VALIX infrastructure</li>
+                        <li><strong>Documentation</strong> - Comprehensive guides and examples</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 18: Contact -->
+        <div class="slide cover-slide">
+            <h2>Let's Connect</h2>
+            
+            <div style="font-size: 1.5em; margin-top: 60px;">
+                <p style="margin: 30px 0;"><strong>Website:</strong> <a href="https://valix.io" style="color: #00D9FF;">valix.io</a> (Coming Soon)</p>
+                <p style="margin: 30px 0;"><strong>GitHub:</strong> <a href="https://github.com/sheik0x/unifiedsecuritylayer" style="color: #00D9FF;">github.com/sheik0x/unifiedsecuritylayer</a></p>
+                <p style="margin: 30px 0;"><strong>Email:</strong> <a href="mailto:contact@valix.io" style="color: #00D9FF;">contact@valix.io</a></p>
+                <p style="margin: 30px 0;"><strong>Twitter:</strong> <a href="https://twitter.com/valixprotocol" style="color: #00D9FF;">@valixprotocol</a></p>
+                <p style="margin: 30px 0;"><strong>Discord:</strong> <a href="https://discord.gg/valix" style="color: #00D9FF;">discord.gg/valix</a></p>
+            </div>
+
+            <h1 style="margin-top: 80px; font-size: 3em;">Thank You</h1>
+            <p style="font-size: 1.5em; color: #888; margin-top: 30px;">Unifying Security Across All Blockchains</p>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" onclick="previousSlide()">← Previous</button>
+        <button class="nav-btn" onclick="nextSlide()">Next →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            updateCounter();
+            updateProgress();
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function previousSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        function updateCounter() {
+            document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
+        }
+
+        function updateProgress() {
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                previousSlide();
+            }
+        });
+
+        // Touch/swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextSlide();
+            }
+            if (touchEndX > touchStartX + 50) {
+                previousSlide();
+            }
+        }
+
+        // Initialize
+        updateProgress();
+    </script>
+</body>
+</html>
