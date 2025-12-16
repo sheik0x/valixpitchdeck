@@ -87,3 +87,6 @@ taskkill /PID <PID> /F
 - Make sure WalletConnect Project ID is set in `.env.local`
 - Try different wallet providers
 - Check browser console for errors
+
+
+

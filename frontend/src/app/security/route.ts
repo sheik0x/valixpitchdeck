@@ -5,3 +5,6 @@ export async function GET(request: Request) {
   const baseUrl = url.origin
   return NextResponse.redirect(new URL('/docs/security', baseUrl), 301)
 }
+
+
+

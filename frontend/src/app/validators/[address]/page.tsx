@@ -171,3 +171,6 @@ export default function ValidatorDetailPage() {
     </div>
   )
 }
+
+
+

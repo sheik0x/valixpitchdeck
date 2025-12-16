@@ -214,3 +214,6 @@ describe("Integration Tests - Full Protocol Flow", function () {
     expect(lease.status).to.equal(3); // Slashed
   });
 });
+
+
+

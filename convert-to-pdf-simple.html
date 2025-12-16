@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VALIX Pitch Deck - PDF Export</title>
+    <style>
+        @media print {
+            .slide {
+                page-break-after: always;
+                page-break-inside: avoid;
+                display: block !important;
+                opacity: 1 !important;
+                transform: none !important;
+                position: relative !important;
+                height: auto !important;
+                padding: 40px !important;
+            }
+            
+            .navigation, .slide-counter, .progress-bar {
+                display: none !important;
+            }
+            
+            body {
+                background: #0A1929 !important;
+            }
+        }
+        
+        @page {
+            size: A4 landscape;
+            margin: 20mm;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // Load the original HTML content
+        fetch('VALIX_PITCH_DECK.html')
+            .then(response => response.text())
+            .then(html => {
+                document.body.innerHTML = html.match(/<body[^>]*>([\s\S]*)<\/body>/i)[1];
+                // Trigger print dialog after a short delay
+                setTimeout(() => {
+                    window.print();
+                }, 1000);
+            })
+            .catch(error => {
+                console.error('Error loading HTML:', error);
+                alert('Please open VALIX_PITCH_DECK.html and use Print to PDF (Ctrl+P)');
+            });
+    </script>
+</body>
+</html>

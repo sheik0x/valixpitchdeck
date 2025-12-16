@@ -143,3 +143,6 @@ Visit `http://localhost:3000` and test all routes. If they work locally, they'll
 ---
 
 **The code is ready. Just set the root directory correctly and deploy!** 🚀
+
+
+
